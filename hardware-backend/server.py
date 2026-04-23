@@ -19,10 +19,10 @@ app.add_middleware(
 
 # This is our test hardware state
 current_state = {
-    "ldr_top": 450,
-    "ldr_bottom": 500,
-    "ldr_left": 300,
-    "ldr_right": 310
+    "ldr_top_left": 450,
+    "ldr_top_right": 460,
+    "ldr_bottom_left": 470,
+    "ldr_bottom_right": 480
 }
 
 class MockSerial:
@@ -33,10 +33,10 @@ class MockSerial:
     def readline(self):
         # Generate some fluctuating dummy data so the Svelte chart moves!
         fake_telemetry = {
-            "ldr_top": random.randint(400, 600),
-            "ldr_bottom": random.randint(400, 600),
-            "ldr_left": random.randint(300, 500),
-            "ldr_right": random.randint(300, 500),
+            "ldr_top_left": random.randint(400, 600),
+            "ldr_top_right": random.randint(400, 600),
+            "ldr_bottom_left": random.randint(400, 600),
+            "ldr_bottom_right": random.randint(400, 600),
         }
         # Encode it into raw bytes, exactly how it arrives over USB from an Arduino
         json_str = json.dumps(fake_telemetry) + "\n"

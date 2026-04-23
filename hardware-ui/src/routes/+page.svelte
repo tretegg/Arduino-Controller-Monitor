@@ -15,10 +15,10 @@
 
     // Arrays to hold the historical data for the chart lines
     let timeLabels: string[] = [];
-    let ldrTopData: number[] = [];
-    let ldrBottomData: number[] = [];
-    let ldrLeftData: number[] = [];
-    let ldrRightData: number[] = [];
+    let ldrTopLeftData: number[] = [];
+    let ldrTopRightData: number[] = [];
+    let ldrBottomLeftData: number[] = [];
+    let ldrBottomRightData: number[] = [];
 
     // Fetch data from the API
     async function fetchStatus() {
@@ -56,18 +56,18 @@
         
         // Push the new data onto the end of the arrays
         timeLabels.push(now);
-        ldrTopData.push(data.ldr_top);
-        ldrBottomData.push(data.ldr_bottom);
-        ldrLeftData.push(data.ldr_left);
-        ldrRightData.push(data.ldr_right);
+        ldrTopLeftData.push(data.ldr_top_left);
+        ldrTopRightData.push(data.ldr_top_right);
+        ldrBottomLeftData.push(data.ldr_bottom_left);
+        ldrBottomRightData.push(data.ldr_bottom_right);
 
         // If the array gets too long, chop off the oldest data point at the front
         if (timeLabels.length > MAX_DATA_POINTS) {
             timeLabels.shift();
-            ldrTopData.shift();
-            ldrBottomData.shift();
-            ldrLeftData.shift();
-            ldrRightData.shift();
+            ldrTopLeftData.shift();
+            ldrTopRightData.shift();
+            ldrBottomLeftData.shift();
+            ldrBottomRightData.shift();
         }
 
         // Tell Chart.js to redraw the canvas
@@ -83,10 +83,10 @@
             data: {
                 labels: timeLabels,
                 datasets: [
-                    { label: 'Top', data: ldrTopData, borderColor: '#ef4444', tension: 0.3, borderWidth: 2 },
-                    { label: 'Bottom', data: ldrBottomData, borderColor: '#3b82f6', tension: 0.3, borderWidth: 2 },
-                    { label: 'Left', data: ldrLeftData, borderColor: '#eab308', tension: 0.3, borderWidth: 2 },
-                    { label: 'Right', data: ldrRightData, borderColor: '#22c55e', tension: 0.3, borderWidth: 2 }
+                    { label: 'Top Left', data: ldrTopLeftData, borderColor: '#ef4444', tension: 0.3, borderWidth: 2 },
+                    { label: 'Top Right', data: ldrTopRightData, borderColor: '#f87171', tension: 0.3, borderWidth: 2 },
+                    { label: 'Bottom Left', data: ldrBottomLeftData, borderColor: '#3b82f6', tension: 0.3, borderWidth: 2 },
+                    { label: 'Bottom Right', data: ldrBottomRightData, borderColor: '#60a5fa', tension: 0.3, borderWidth: 2 }
                 ]
             },
             options: {
@@ -133,13 +133,6 @@
     <main class="max-w-5xl mx-auto">
         <header class="flex justify-between items-center mb-6 border-b border-slate-700 pb-4">
             <h1 class="text-3xl font-bold tracking-tight">Arduino Control Center</h1>
-            <div class="flex items-center gap-2">
-                <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                </span>
-                <span class="text-sm font-mono text-emerald-400">ONLINE</span>
-            </div>
         </header>
 
         {#if hardwareStatus}
