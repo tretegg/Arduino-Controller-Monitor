@@ -81,7 +81,7 @@ def get_status():
 # Similar to the above, but for POST requests
 @app.post("/api/move")
 def move_motors(command: MoveCommand):
-    # This will send a string like "Azimuth:clockwise:10" or "Elevation/counterclockwise:5" to the serial port
+    # This will send a string like "Azimuth:clockwise:10" or "Elevation:counterclockwise:5" to the serial port
     instruction = f"Sending command: {command.axis}:{command.direction}:{command.steps}"
 
     print(instruction)  # Log the command for debugging
