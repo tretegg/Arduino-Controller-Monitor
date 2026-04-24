@@ -62,7 +62,7 @@ else:
 # Define the structure of a movement command from the frontend
 class MoveCommand(BaseModel):
     axis: str      # Azimuth or Elevation
-    direction: str # forward or backward (clockwise or counterclockwise)
+    direction: str # clockwise or counterclockwise
     steps: int
 
 # @ is a decorator that tells FastAPI to treat this function as an endpoint for GET requests at the path /api/status
@@ -77,11 +77,11 @@ def get_status():
         return json.loads(data_string)
     except Exception as e:
         return {"error": "Failed to read hardware", "details": str(e)}
-
+    
 # Similar to the above, but for POST requests
 @app.post("/api/move")
 def move_motors(command: MoveCommand):
-    # This will send a string like "Azimuth:10" or "Elevation:-5" to the serial port
+    # This will send a string like "Azimuth:clockwise:10" or "Elevation/counterclockwise:5" to the serial port
     instruction = f"Sending command: {command.axis}:{command.direction}:{command.steps}"
 
     print(instruction)  # Log the command for debugging

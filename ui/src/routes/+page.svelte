@@ -158,8 +158,8 @@
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Azimuth</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <button onclick={() => moveMotor('azimuth', 'backward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">-10 CCW</button>
-                                <button onclick={() => moveMotor('azimuth', 'forward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">+10 CW</button>
+                                <button onclick={() => moveMotor('azimuth', 'counterclockwise', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">10 CCW</button>
+                                <button onclick={() => moveMotor('azimuth', 'clockwise', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">10 CW</button>
                             </div>
                         </div>
 
@@ -168,13 +168,12 @@
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Elevation</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <button onclick={() => moveMotor('elevation', 'backward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">-10 CCW</button>
-                                <button onclick={() => moveMotor('elevation', 'forward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">+10 CW</button>
+                                <button onclick={() => moveMotor('elevation', 'counterclockwise', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">10 CCW</button>
+                                <button onclick={() => moveMotor('elevation', 'clockwise', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">10 CW</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         {:else}
             <div class="flex flex-col items-center justify-center h-64 border-2 border-dashed border-slate-700 rounded-xl">
