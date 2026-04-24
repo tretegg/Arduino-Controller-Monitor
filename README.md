@@ -4,7 +4,7 @@ This project was designed for a dual-axis solar tracker but can be adapted for a
 
 ## Architecture Stack
 
-This project is separated into three distinct layers to cleanly decouple the hardware logic from the user interface.
+This project is separated into three distinct layers to control the hardware from a user interface.
 
 * **Frontend (SvelteKit + Tailwind CSS + Chart.js):** Reactive web dashboard that polls the API for live data and provides manual motor override controls.
 * **Backend API (Python + FastAPI + PySerial):** A lightweight gateway server. It translates HTTP REST requests from the web into raw Serial byte commands for the Arduino, and vice versa.
