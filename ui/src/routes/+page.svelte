@@ -47,6 +47,15 @@
         });
     }
 
+    // Change mode and send to the API
+    async function changeMode(mode: string) {
+        await fetch(`${apiUrl}/change_mode`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode })
+        });
+    }
+
     // Update the chart
     function updateChart(data: any) {
         if (!sensorChart) return;
@@ -170,6 +179,16 @@
                             <div class="grid grid-cols-2 gap-2">
                                 <button onclick={() => moveMotor('elevation', 'counterclockwise', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">10 CCW</button>
                                 <button onclick={() => moveMotor('elevation', 'clockwise', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">10 CW</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Change Mode</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick={() => changeMode('MODE:MANUAL')} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">Manual</button>
+                                <button onclick={() => changeMode('MODE:AUTO')} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">Auto</button>
                             </div>
                         </div>
                     </div>

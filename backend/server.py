@@ -65,6 +65,10 @@ class MoveCommand(BaseModel):
     direction: str # clockwise or counterclockwise
     steps: int
 
+# Define the structure of a mode change command
+class ModeCommand(BaseModel):
+    mode: str # MODE:MANUAL or MODE:AUTO
+
 # @ is a decorator that tells FastAPI to treat this function as an endpoint for GET requests at the path /api/status
 @app.get("/api/status")
 def get_status():
@@ -74,7 +78,7 @@ def get_status():
         data_string = raw_bytes.decode('utf-8').strip()
         
         # Turn the string back into a Python dictionary and send to Svelte
-        return json.loads(data_string)
+        return json.loads(data_string) 
     except Exception as e:
         return {"error": "Failed to read hardware", "details": str(e)}
     
@@ -82,9 +86,19 @@ def get_status():
 @app.post("/api/move")
 def move_motors(command: MoveCommand):
     # This will send a string like "Azimuth:clockwise:10" or "Elevation:counterclockwise:5" to the serial port
-    instruction = f"Sending command: {command.axis}:{command.direction}:{command.steps}"
+    instruction = f"{command.axis}:{command.direction}:{command.steps}"
 
-    print(instruction)  # Log the command for debugging
+    print(f"Sending command: {instruction}")  # Log the command for debugging
     arduino.write(instruction.encode('utf-8'))  # Convert string to bytes and send to Arduino
 
     return {"status": "success","message": f"Command sent: {command.axis} {command.direction} {command.steps}"}
+
+@app.post("/api/change_mode")
+def change_mode(command: ModeCommand):
+    # This will send a string like "MODE:MANUAL" or "MODE:AUTO" to the serial port
+    mode = command.mode
+
+    print(f"Changing mode to: {mode}") # Log the mode change for debugging
+    arduino.write(mode.encode('utf-8'))
+
+    return {"status": "success", "message": f"Mode changed to: {mode}"}
