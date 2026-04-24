@@ -132,7 +132,7 @@
 <div class="min-h-screen bg-slate-900 text-slate-200 font-sans p-8">
     <main class="max-w-5xl mx-auto">
         <header class="flex justify-between items-center mb-6 border-b border-slate-700 pb-4">
-            <h1 class="text-3xl font-bold tracking-tight">Arduino Control Center</h1>
+            <h1 class="text-3xl font-bold tracking-tight">Arduino Controller / Monitor</h1>
         </header>
 
         {#if hardwareStatus}
@@ -140,7 +140,7 @@
                 
                 <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg lg:col-span-2">
                     <h2 class="text-xl font-semibold mb-4 text-slate-100 flex items-center gap-2">
-                        LDR Intensity Stream
+                        LDR Intensity
                     </h2>
                     <div class="relative h-64 w-full">
                         <canvas bind:this={chartCanvas}></canvas>
@@ -158,8 +158,8 @@
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Azimuth</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <button onclick={() => moveMotor('azimuth', 'backward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">-10° CCW</button>
-                                <button onclick={() => moveMotor('azimuth', 'forward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">+10° CW</button>
+                                <button onclick={() => moveMotor('azimuth', 'backward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">-10 CCW</button>
+                                <button onclick={() => moveMotor('azimuth', 'forward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">+10 CW</button>
                             </div>
                         </div>
 
@@ -168,8 +168,8 @@
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Elevation</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
-                                <button onclick={() => moveMotor('elevation', 'backward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">-10° DOWN</button>
-                                <button onclick={() => moveMotor('elevation', 'forward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">+10° UP</button>
+                                <button onclick={() => moveMotor('elevation', 'backward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">-10 CCW</button>
+                                <button onclick={() => moveMotor('elevation', 'forward', 10)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">+10 CW</button>
                             </div>
                         </div>
                     </div>
