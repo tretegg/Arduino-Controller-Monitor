@@ -22,21 +22,21 @@
 
     // Fetch data from the API
     async function fetchStatus() {
-            try {   
-                const response = await fetch(`${apiUrl}/status`);
-                hardwareStatus = await response.json();
+        try {   
+            const response = await fetch(`${apiUrl}/status`);
+            hardwareStatus = await response.json();
 
-                await tick();
-            
-                if (!sensorChart && chartCanvas) {
-                    initChart();
-                }
-            
-                updateChart(hardwareStatus);
-            } catch (error) {
-                console.error('Error fetching status:', error);
+            await tick();
+        
+            if (!sensorChart && chartCanvas) {
+                initChart();
             }
+        
+            updateChart(hardwareStatus);
+        } catch (error) {
+            console.error('Error fetching status:', error);
         }
+    }
 
     // Send command to the API
     async function moveMotor(axis: string, direction: string, steps: number) {
@@ -51,7 +51,7 @@
     function updateChart(data: any) {
         if (!sensorChart) return;
 
-        // Get the current time (e.g., "10:30:15 AM")
+        // Get the current time 
         const now = new Date().toLocaleTimeString('en-US', { hour12: false });
         
         // Push the new data onto the end of the arrays
@@ -61,7 +61,7 @@
         ldrBottomLeftData.push(data.ldr_bottom_left);
         ldrBottomRightData.push(data.ldr_bottom_right);
 
-        // If the array gets too long, chop off the oldest data point at the front
+        // If the array is longer than MAX_DATA_POINTS, chop off the oldest data point at the front
         if (timeLabels.length > MAX_DATA_POINTS) {
             timeLabels.shift();
             ldrTopLeftData.shift();
@@ -118,7 +118,7 @@
         pollingInterval = setInterval(fetchStatus, 1000); // Poll every second
     });
     
-    // Clean up on component destroy
+    // Clean up on component destroy (e.g. when reloading the page)
     onDestroy(() => {
         if (pollingInterval) {
             clearInterval(pollingInterval);

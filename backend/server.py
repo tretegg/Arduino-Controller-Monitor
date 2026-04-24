@@ -5,13 +5,15 @@ import random
 import json
 import serial
 
+# Run the server with:
 # uvicorn server:app --reload
 
 app = FastAPI()
 
+# Enable CORS so our Svelte frontend can talk to this API without security issues
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, you'd lock this down to just your frontend URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,22 +33,23 @@ class MockSerial:
         print(f"\nStarted Mock Serial Port on {port} at {baudrate} baud.\n")
 
     def readline(self):
-        # Generate some fluctuating dummy data so the Svelte chart moves!
-        fake_telemetry = {
+        # Generate some fluctuating dummy data
+        fake_data = {
             "ldr_top_left": random.randint(400, 600),
             "ldr_top_right": random.randint(400, 600),
             "ldr_bottom_left": random.randint(400, 600),
             "ldr_bottom_right": random.randint(400, 600),
         }
-        # Encode it into raw bytes, exactly how it arrives over USB from an Arduino
-        json_str = json.dumps(fake_telemetry) + "\n"
+
+        # Encode it into raw bytes, same as how it arrives over USB from an Arduino
+        json_str = json.dumps(fake_data) + "\n"
         return json_str.encode('utf-8')
 
     def write(self, data_bytes):
-        # Decode the bytes sent from the API and "move" our fake motors
+        # Decode the bytes sent from the API and "move" the fake motors
         command = data_bytes.decode('utf-8').strip()
         print(f"[ARDUINO RECEIVED]: {command}")
-        # Do something with the command, like parse it and move the motors
+        # Do something with the command
 
 USE_REAL_HARDWARE = False
 
