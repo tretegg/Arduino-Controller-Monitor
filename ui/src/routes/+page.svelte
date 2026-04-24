@@ -20,6 +20,21 @@
     let ldrBottomLeftData: number[] = [];
     let ldrBottomRightData: number[] = [];
 
+    // Custom command dropdown
+    let selectedDirection: string = $state('');
+    let selectedAxis: string = $state('');
+    let selectedSteps: number = $state(0);
+
+    const axisChoices = [
+        { label: 'Azimuth', value: 'azimuth' },
+        { label: 'Elevation', value: 'elevation' }
+    ]
+
+    const directionChoices = [
+        { label: 'Clockwise', value: 'clockwise' },
+        { label: 'Counterclockwise', value: 'counterclockwise' }
+    ]
+
     // Fetch data from the API
     async function fetchStatus() {
         try {   
@@ -156,13 +171,13 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg flex flex-col justify-between">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 shadow-lg">
                     <div>
-                        <h2 class="text-xl font-semibold mb-6 text-slate-100 flex items-center gap-2">
-                            Manual Movements
+                        <h2 class="text-xl font-semibold mb-4 text-slate-100 flex items-center gap-2">
+                            Controls
                         </h2>
                         
-                        <div class="mb-6">
+                        <div class="mb-4">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Azimuth</span>
                             </div>
@@ -172,7 +187,7 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="mb-4">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Elevation</span>
                             </div>
@@ -182,13 +197,38 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="mb-4">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Change Mode</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <button onclick={() => changeMode('MODE:MANUAL')} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">Manual</button>
                                 <button onclick={() => changeMode('MODE:AUTO')} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">Auto</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-slate-400 text-sm font-bold uppercase tracking-wider">Custom Move Command</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <select id="axis-select" bind:value={selectedAxis} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">
+                                    <option value="" disabled selected>Axis</option>
+                                    {#each axisChoices as option}
+                                        <option value={option.value}>{option.label}</option>
+                                    {/each}
+                                </select>
+                                <select id="direction-select" bind:value={selectedDirection} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">
+                                    <option value="" disabled selected>Direction</option>
+                                    {#each directionChoices as option}
+                                        <option value={option.value}>{option.label}</option>
+                                    {/each}
+                                </select>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="number" min="1" placeholder="Steps" id="steps-input" bind:value={selectedSteps} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm" />
+                                    <button onclick={() => moveMotor(selectedAxis, selectedDirection, selectedSteps)} class="bg-slate-700 text-slate-200 py-2 rounded hover:bg-slate-600 transition-colors font-mono text-sm border border-slate-600 shadow-sm">
+                                        Move
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -201,3 +241,18 @@
         {/if}
     </main>
 </div>
+
+<style>
+/* Hide the up/down arrows on number inputs*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+</style>
