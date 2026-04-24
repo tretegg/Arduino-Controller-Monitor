@@ -73,12 +73,16 @@ class ModeCommand(BaseModel):
 @app.get("/api/status")
 def get_status():
     try:
-        # Read the raw bytes and decode them into a string
+        # Ask the Arduino for the latest data
+        arduino.write("STATUS\n".encode('utf-8')) # Convert string to bytes and send to Arduino
+        
+        # Read the reply from the arduino
         raw_bytes = arduino.readline()
+        # .strip() removes any extra whitespace or newline characters from the ends of the string
         data_string = raw_bytes.decode('utf-8').strip()
         
-        # Turn the string back into a Python dictionary and send to Svelte
-        return json.loads(data_string) 
+        # Turn it into a dictionary for the Svelte frontend
+        return json.loads(data_string)
     except Exception as e:
         return {"error": "Failed to read hardware", "details": str(e)}
     
@@ -99,6 +103,6 @@ def change_mode(command: ModeCommand):
     mode = command.mode
 
     print(f"Changing mode to: {mode}") # Log the mode change for debugging
-    arduino.write(mode.encode('utf-8'))
+    arduino.write(mode.encode('utf-8')) # Convert string to bytes and send to Arduino
 
     return {"status": "success", "message": f"Mode changed to: {mode}"}
