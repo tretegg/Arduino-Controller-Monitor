@@ -49,7 +49,6 @@ class MockSerial:
         # Decode the bytes sent from the API and "move" the fake motors
         command = data_bytes.decode('utf-8').strip()
         print(f"[ARDUINO RECEIVED]: {command}")
-        # Do something with the command
 
 USE_REAL_HARDWARE = False
 
@@ -90,7 +89,7 @@ def get_status():
 @app.post("/api/move")
 def move_motors(command: MoveCommand):
     # This will send a string like "Azimuth:clockwise:10" or "Elevation:counterclockwise:5" to the serial port
-    instruction = f"{command.axis}:{command.direction}:{command.steps}"
+    instruction = f"{command.axis}:{command.direction}:{command.steps}\n"
 
     print(f"Sending command: {instruction}")  # Log the command for debugging
     arduino.write(instruction.encode('utf-8'))  # Convert string to bytes and send to Arduino
@@ -100,7 +99,7 @@ def move_motors(command: MoveCommand):
 @app.post("/api/change_mode")
 def change_mode(command: ModeCommand):
     # This will send a string like "MODE:MANUAL" or "MODE:AUTO" to the serial port
-    mode = command.mode
+    mode = f"{command.mode}\n"
 
     print(f"Changing mode to: {mode}") # Log the mode change for debugging
     arduino.write(mode.encode('utf-8')) # Convert string to bytes and send to Arduino
