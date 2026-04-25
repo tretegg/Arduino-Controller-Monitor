@@ -50,10 +50,10 @@ class MockSerial:
         command = data_bytes.decode('utf-8').strip()
         print(f"[ARDUINO RECEIVED]: {command}")
 
-USE_REAL_HARDWARE = False
+USE_REAL_HARDWARE = True
 
 if USE_REAL_HARDWARE:
-    # Swap "COM3" with actual port later
+    # Swap "COM3" with actual port
     arduino = serial.Serial("COM3", 9600, timeout=1) 
 else:
     arduino = MockSerial("MOCK_PORT", 9600)
@@ -80,6 +80,8 @@ def get_status():
         # .strip() removes any extra whitespace or newline characters from the ends of the string
         data_string = raw_bytes.decode('utf-8').strip()
         
+        print(f"Received from Arduino: {data_string}")  # Log the raw string for debugging
+
         # Turn it into a dictionary for the Svelte frontend
         return json.loads(data_string)
     except Exception as e:
