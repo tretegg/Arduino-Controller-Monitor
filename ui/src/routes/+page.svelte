@@ -139,7 +139,7 @@
     // Start loop
     onMount(() => {
         fetchStatus(); // Fetch initial data
-        pollingInterval = setInterval(fetchStatus, 100); // Poll every second
+        pollingInterval = setInterval(fetchStatus, 1000); // Poll every second
     });
     
     // Clean up on component destroy (e.g. when reloading the page)

@@ -54,9 +54,9 @@ USE_REAL_HARDWARE = True
 
 if USE_REAL_HARDWARE:
     # Swap "COM3" with actual port
-    arduino = serial.Serial("COM3", 9600, timeout=1) 
+    arduino = serial.Serial("COM3", 115200, timeout=1) 
 else:
-    arduino = MockSerial("MOCK_PORT", 9600)
+    arduino = MockSerial("MOCK_PORT", 115200)
 
 # Define the structure of a movement command from the frontend
 class MoveCommand(BaseModel):
